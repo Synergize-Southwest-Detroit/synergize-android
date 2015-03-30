@@ -17,7 +17,12 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return TestFragment.newInstance(position);
+        switch (position) {
+            case 0: return new EventsFragment();
+            case 1: return new HowtosFragment();
+            case 2: return new ResourcesFragment();
+            default: return null;
+        }
     }
 
     @Override
