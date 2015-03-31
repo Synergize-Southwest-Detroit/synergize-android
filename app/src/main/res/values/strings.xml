@@ -10,4 +10,5 @@
     <string name="event_description_placeholder">Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here.</string>
     <string name="event_date_placeholder">May 1st, 5:00pm-11:00pm</string>
     <string name="event_location_placeholder">3114 Bronson Blvd, Kalamazoo MI</string>
+    <string name="title_activity_how_to_detail">HowToDetailActivity</string>
 </resources>
