@@ -5,4 +5,9 @@
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="title_activity_event_detail">EventDetailActivity</string>
+    <string name="title_placeholder">Event Title goes here.</string>
+    <string name="event_description_placeholder">Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here. Event description will go here.</string>
+    <string name="event_date_placeholder">May 1st, 5:00pm-11:00pm</string>
+    <string name="event_location_placeholder">3114 Bronson Blvd, Kalamazoo MI</string>
 </resources>
