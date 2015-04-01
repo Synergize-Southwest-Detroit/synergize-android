@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class EventDetailActivity extends ActionBarActivity {
@@ -18,7 +19,7 @@ public class EventDetailActivity extends ActionBarActivity {
         Intent intent = getIntent();
         int eid = intent.getIntExtra(EventsFragment.EVENT_EXTRA, -1);
         if (eid == -1) {
-            // SOMETHING WENT WRONG!!!
+            Toast.makeText(getApplicationContext(), "Error loading event data", Toast.LENGTH_LONG).show();
         }
     }
 

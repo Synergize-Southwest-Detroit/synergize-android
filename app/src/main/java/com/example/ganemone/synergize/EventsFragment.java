@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,12 +28,19 @@ public class EventsFragment extends Fragment implements ListView.OnItemClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ArrayList<Event> events = new ArrayList<Event>();
-        Date now = new Date();
-        events.add(new Event(1, "Title", "Description", now, now, "3114 Bronson Blvd", "", true, false, new Category(1, "Music")));
-        events.add(new Event(2, "Title", "Description", now, now, "3114 Bronson Blvd", "", true, false, new Category(1, "Music")));
-        events.add(new Event(3, "Title", "Description", now, now, "3114 Bronson Blvd", "", true, false, new Category(1, "Music")));
-        events.add(new Event(4, "Title", "Description", now, now, "3114 Bronson Blvd", "", true, false, new Category(1, "Music")));
         adapter = new EventListAdapter(getActivity().getApplicationContext(), events);
+        APIManager.getInstance().loadEvents(new Closure() {
+            @Override
+            public void onSuccess() {
+                adapter.syncWithAPIManager();
+                Toast.makeText(getActivity().getApplicationContext(), "Maybe worked...", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(getActivity().getApplicationContext(), "Failed to load events", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -45,8 +53,14 @@ public class EventsFragment extends Fragment implements ListView.OnItemClickList
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), EventDetailActivity.class);
+        Event event = adapter.getItem(position);
         Date now = new Date();
         intent.putExtra(EVENT_EXTRA, 1);
         startActivity(intent);

@@ -1,6 +1,7 @@
 package com.example.ganemone.synergize;
 
 import android.content.Context;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,13 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 
     public EventListAdapter(Context context, ArrayList<Event> events) {
         super(context, R.layout.event_list_item, events);
+    }
+
+    public void syncWithAPIManager() {
+        ArrayList<Event> events = APIManager.getInstance().events;
+        this.clear();
+        this.addAll(events);
+        this.notifyDataSetChanged();
     }
 
     @Override
