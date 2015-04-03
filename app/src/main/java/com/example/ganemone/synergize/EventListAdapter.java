@@ -33,8 +33,8 @@ public class EventListAdapter extends ArrayAdapter<Event> {
         TextView locationTextView = (TextView) convertView.findViewById(R.id.location);
 
         titleTextView.setText(event.title);
-        dateTextView.setText("Date range goes here");
-        locationTextView.setText("Location goes here");
+        dateTextView.setText(event.getFormattedDateRange());
+        locationTextView.setText(event.getDisplayLocation());
 
         return convertView;
     }
