@@ -21,6 +21,6 @@ public class Resource extends APIObject {
     }
 
     public Resource(JSONObject obj) throws JSONException {
-        this(obj.getInt("id"), obj.getString("title"), obj.getString("link"));
+        this(obj.getInt("id"), obj.getString("title"), obj.getString("resource"));
     }
 }

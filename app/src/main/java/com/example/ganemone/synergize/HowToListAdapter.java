@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.TwoLineListItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,8 +16,8 @@ import java.util.List;
  */
 public class HowToListAdapter extends ArrayAdapter<HowTo> {
 
-    public HowToListAdapter(Context context, List<HowTo> items) {
-        super(context, R.layout.howto_list_item, items);
+    public HowToListAdapter(Context applicationContext) {
+        super(applicationContext, R.layout.howto_list_item, APIManager.getInstance().howtos);
     }
 
     @Override
@@ -26,12 +27,21 @@ public class HowToListAdapter extends ArrayAdapter<HowTo> {
             convertView = inflater.inflate(R.layout.howto_list_item, parent, false);
         }
 
+        HowTo item = getItem(position);
+
         TextView titleTextView = (TextView) convertView.findViewById(R.id.title);
         TextView descriptionTextView = (TextView) convertView.findViewById(R.id.description);
 
-        titleTextView.setText("How To Title");
-        descriptionTextView.setText("Description goes here.");
+        titleTextView.setText(item.title);
+        descriptionTextView.setText(item.description);
 
         return convertView;
+    }
+
+    public void syncWithAPIManager() {
+        ArrayList<HowTo> howtos = APIManager.getInstance().howtos;
+        this.clear();
+        this.addAll(howtos);
+        this.notifyDataSetChanged();
     }
 }

@@ -15,15 +15,8 @@ import java.util.ArrayList;
  */
 public class EventListAdapter extends ArrayAdapter<Event> {
 
-    public EventListAdapter(Context context, ArrayList<Event> events) {
-        super(context, R.layout.event_list_item, events);
-    }
-
-    public void syncWithAPIManager() {
-        ArrayList<Event> events = APIManager.getInstance().events;
-        this.clear();
-        this.addAll(events);
-        this.notifyDataSetChanged();
+    public EventListAdapter(Context context) {
+        super(context, R.layout.event_list_item, APIManager.getInstance().events);
     }
 
     @Override

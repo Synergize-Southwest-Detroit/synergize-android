@@ -27,20 +27,21 @@ public class EventsFragment extends Fragment implements ListView.OnItemClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<Event> events = new ArrayList<Event>();
-        adapter = new EventListAdapter(getActivity().getApplicationContext(), events);
-        APIManager.getInstance().loadEvents(new Closure() {
-            @Override
-            public void onSuccess() {
-                adapter.syncWithAPIManager();
-                Toast.makeText(getActivity().getApplicationContext(), "Maybe worked...", Toast.LENGTH_LONG).show();
-            }
+        adapter = new EventListAdapter(getActivity().getApplicationContext());
+        APIManager manager = APIManager.getInstance();
+        if (manager.events.size() == 0) {
+            manager.loadEvents(new Closure() {
+                @Override
+                public void onSuccess() {
+                    adapter.notifyDataSetChanged();
+                }
 
-            @Override
-            public void onFailure(String message) {
-                Toast.makeText(getActivity().getApplicationContext(), "Failed to load events", Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onFailure(String message) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Failed to load events, " + message, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     @Override

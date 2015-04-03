@@ -2,6 +2,7 @@ package com.example.ganemone.synergize;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Dictionary;
 
 /**
  * Created by ganemone on 4/1/15.
@@ -84,7 +86,7 @@ public class APIManager {
                 cb.onFailure(message);
             }
         });
-
+        RequestParams params = new RequestParams("page", eventPage);
         client.get(BASE_URL + "events", null, handler);
     }
 
@@ -106,7 +108,8 @@ public class APIManager {
             }
         });
 
-        client.get(BASE_URL + "howtos", null, handler);
+        RequestParams params = new RequestParams("page", howtoPage);
+        client.get(BASE_URL + "howtos", params, handler);
     }
 
     public void loadResources(final Closure cb) {
@@ -126,7 +129,7 @@ public class APIManager {
                 cb.onFailure(message);
             }
         });
-
+        RequestParams params = new RequestParams("page", resourcePage);
         client.get(BASE_URL + "resources", null, handler);
     }
 

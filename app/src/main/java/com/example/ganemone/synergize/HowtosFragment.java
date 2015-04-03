@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,12 +31,21 @@ public class HowtosFragment extends Fragment implements ListView.OnItemClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HowTo first = new HowTo(1, "Some Title", "Some Description");
-        HowTo second = new HowTo(2, "Some Title", "Some Description");
-        ArrayList<HowTo> items = new ArrayList<HowTo>();
-        items.add(first);
-        items.add(second);
-        adapter = new HowToListAdapter(getActivity().getApplicationContext(), items);
+        adapter = new HowToListAdapter(getActivity().getApplicationContext());
+        APIManager manager = APIManager.getInstance();
+        if (manager.howtos.size() == 0) {
+            manager.loadHowtos(new Closure() {
+                @Override
+                public void onSuccess() {
+                    adapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onFailure(String message) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Failed to load howtos, " + message, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     @Override
@@ -55,7 +65,8 @@ public class HowtosFragment extends Fragment implements ListView.OnItemClickList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(getActivity(), HowToDetailActivity.class);
-        intent.putExtra(HOWTO_EXTRA, 1);
+        HowTo item = adapter.getItem(position);
+        intent.putExtra(HOWTO_EXTRA, item.id);
         startActivity(intent);
-    }
+     }
 }
