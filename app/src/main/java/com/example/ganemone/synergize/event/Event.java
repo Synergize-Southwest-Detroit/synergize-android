@@ -3,7 +3,7 @@ package com.example.ganemone.synergize.event;
 import android.widget.TextView;
 
 import com.example.ganemone.synergize.api.APIObject;
-import com.example.ganemone.synergize.Category;
+import com.example.ganemone.synergize.category.Category;
 
 import org.json.JSONException;
 import org.json.JSONObject;
