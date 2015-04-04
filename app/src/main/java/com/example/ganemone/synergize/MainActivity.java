@@ -1,16 +1,13 @@
 package com.example.ganemone.synergize;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.util.AttributeSet;
-import android.view.View;
 
+import com.example.ganemone.synergize.event.EventsFragment;
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 
 

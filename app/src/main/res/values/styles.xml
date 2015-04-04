@@ -5,21 +5,28 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="NavTheme" parent="MaterialNavigationDrawerTheme">
-        <item name="drawerType">@integer/DRAWERTYPE_NO_HEADER</item>
-        <item name="colorPrimary">#8bc34a</item>
-        <item name="colorPrimaryDark">#558b2f</item>
-        <item name="colorAccent">#FFFFFF</item>
-        <item name="learningPattern">false</item>
-    </style>
-
     <style name="ListView" parent="@android:style/Widget.ListView">
         <item name="android:background">@color/primary_dark_material_dark</item>
         <item name="android:cacheColorHint">@android:color/transparent</item>
         <item name="android:divider">@android:color/darker_gray</item>
         <item name="android:dividerHeight">1dp</item>
         <item name="android:textColor">@color/primary_material_light</item>
-        <!--<item name="android:listSelector">@drawable/list_item_selector</item>-->
+    </style>
+
+    <style name="btnBlack" parent="@android:style/Widget.Button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_margin">@dimen/activity_horizontal_margin</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:gravity">center</item>
+        <item name="android:shadowColor">#000000</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+        <item name="android:background">@drawable/btn_black</item>
+        <item name="android:padding">10dip</item>
     </style>
 
     <color name="white">#FFFFFF</color>

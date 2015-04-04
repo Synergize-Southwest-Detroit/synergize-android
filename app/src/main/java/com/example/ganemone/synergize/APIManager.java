@@ -1,5 +1,6 @@
 package com.example.ganemone.synergize;
 
+import com.example.ganemone.synergize.event.Event;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -12,7 +13,6 @@ import org.json.JSONObject;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Dictionary;
 
 /**
  * Created by ganemone on 4/1/15.

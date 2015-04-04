@@ -1,14 +1,14 @@
-package com.example.ganemone.synergize;
+package com.example.ganemone.synergize.event;
 
 import android.content.Context;
-import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.ganemone.synergize.APIManager;
+import com.example.ganemone.synergize.R;
 
 /**
  * Created by ganemone on 3/30/15.

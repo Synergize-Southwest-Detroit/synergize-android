@@ -1,6 +1,9 @@
-package com.example.ganemone.synergize;
+package com.example.ganemone.synergize.event;
 
 import android.widget.TextView;
+
+import com.example.ganemone.synergize.APIObject;
+import com.example.ganemone.synergize.Category;
 
 import org.json.JSONArray;
 import org.json.JSONException;

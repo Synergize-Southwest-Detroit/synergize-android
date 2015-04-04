@@ -1,19 +1,24 @@
-package com.example.ganemone.synergize;
+package com.example.ganemone.synergize.event;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.ganemone.synergize.APIManager;
+import com.example.ganemone.synergize.R;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
-import java.util.Locale;
 
 
 public class EventDetailActivity extends ActionBarActivity {
@@ -78,19 +83,28 @@ public class EventDetailActivity extends ActionBarActivity {
         }
     }
 
-
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void addEventToCalendar() {
-        Calendar beginTime = Calendar.getInstance();
-        Calendar endTime = Calendar.getInstance();
-        Intent intent = new Intent(Intent.ACTION_INSERT)
-                .setData(CalendarContract.Events.CONTENT_URI)
-                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.start.getTime())
-                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.end.getTime())
-                .putExtra(CalendarContract.Events.TITLE, event.title)
-                .putExtra(CalendarContract.Events.DESCRIPTION, event.description)
-                .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getDisplayLocation());
-        startActivity(intent);
+        int apiVersion = android.os.Build.VERSION.SDK_INT;
+        if (apiVersion >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            Calendar beginTime = Calendar.getInstance();
+            Calendar endTime = Calendar.getInstance();
+            Intent intent = new Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.Events.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.start.getTime())
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.end.getTime())
+                    .putExtra(CalendarContract.Events.TITLE, event.title)
+                    .putExtra(CalendarContract.Events.DESCRIPTION, event.description)
+                    .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getDisplayLocation());
+            startActivity(intent);
+        }
     }
 
+    public void viewEventInMaps(View view) {
+        this.viewEventOnMap();
+    }
 
+    public void addEventToCalendar(View view) {
+        this.addEventToCalendar();
+    }
 }

@@ -1,35 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/event_title"
-        android:text="@string/title_placeholder"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/event_date_range"
-        android:text="@string/event_date_placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:textColor="@color/primary_material_light" />
+        <TextView
+            android:id="@+id/event_title"
+            android:text="@string/title_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin" />
 
-    <TextView
-        android:id="@+id/event_description"
-        android:text="@string/event_description_placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
+        <TextView
+            android:id="@+id/event_date_range"
+            android:text="@string/event_date_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:textColor="@color/primary_material_light" />
 
-    <TextView
-        android:id="@+id/event_location"
-        android:text="@string/event_location_placeholder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"/>
+        <TextView
+            android:id="@+id/event_description"
+            android:text="@string/event_description_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/event_location"
+            android:text="@string/event_location_placeholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"/>
+    </LinearLayout>
+    <Button
+        android:text="@string/add_to_calendar"
+        style="@style/btnBlack"
+        android:id="@+id/btn_add_to_calendar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="viewEventInMaps"/>
+
+    <Button
+        android:text="@string/google_maps"
+        style="@style/btnBlack"
+        android:id="@+id/btn_google_maps"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="addEventToCalendar"/>
+
+</RelativeLayout>

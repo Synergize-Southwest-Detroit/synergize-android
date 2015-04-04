@@ -1,4 +1,4 @@
-package com.example.ganemone.synergize;
+package com.example.ganemone.synergize.event;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.example.ganemone.synergize.APIManager;
+import com.example.ganemone.synergize.Closure;
+import com.example.ganemone.synergize.R;
+
 import java.util.Date;
 
 /**
