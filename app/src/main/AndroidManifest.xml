@@ -23,7 +23,7 @@
             android:label="@string/title_activity_event_detail" >
         </activity>
         <activity
-            android:name=".HowToDetailActivity"
+            android:name=".howto.HowToDetailActivity"
             android:label="@string/title_activity_how_to_detail" >
         </activity>
     </application>

@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 
 import com.example.ganemone.synergize.event.EventsFragment;
+import com.example.ganemone.synergize.howto.HowtosFragment;
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 
 
