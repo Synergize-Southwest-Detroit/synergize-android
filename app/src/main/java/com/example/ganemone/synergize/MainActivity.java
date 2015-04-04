@@ -22,6 +22,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ImageManager.configure(getApplicationContext());
         setContentView(R.layout.activity_main);
         adapter = new MPagerAdapter(getSupportFragmentManager());
         pager = (ViewPager) findViewById(R.id.viewpager);
