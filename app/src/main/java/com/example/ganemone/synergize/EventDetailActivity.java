@@ -1,11 +1,19 @@
 package com.example.ganemone.synergize;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.provider.CalendarContract;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Locale;
 
 
 public class EventDetailActivity extends ActionBarActivity {
@@ -21,6 +29,15 @@ public class EventDetailActivity extends ActionBarActivity {
         if (eid == -1) {
             Toast.makeText(getApplicationContext(), "Error loading event data", Toast.LENGTH_LONG).show();
         }
+        event = APIManager.getInstance().getEventByID(eid);
+        this.setTitle(event.title);
+
+        TextView title = (TextView) findViewById(R.id.event_title);
+        TextView dateRange = (TextView) findViewById(R.id.event_date_range);
+        TextView description = (TextView) findViewById(R.id.event_description);
+        TextView location = (TextView) findViewById(R.id.event_location);
+
+        event.setUpWithViews(title, dateRange, description, location);
     }
 
 
@@ -39,10 +56,41 @@ public class EventDetailActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.add_to_calendar) {
+            this.addEventToCalendar();
+            return true;
+        }
+        if (id == R.id.view_on_map) {
+            this.viewEventOnMap();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void viewEventOnMap() {
+        try {
+            String map = "http://maps.google.co.in/maps?q=" + URLEncoder.encode(event.address, "utf-8");
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(map));
+            startActivity(intent);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void addEventToCalendar() {
+        Calendar beginTime = Calendar.getInstance();
+        Calendar endTime = Calendar.getInstance();
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, event.start.getTime())
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, event.end.getTime())
+                .putExtra(CalendarContract.Events.TITLE, event.title)
+                .putExtra(CalendarContract.Events.DESCRIPTION, event.description)
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, event.getDisplayLocation());
+        startActivity(intent);
+    }
+
+
 }

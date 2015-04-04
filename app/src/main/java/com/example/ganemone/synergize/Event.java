@@ -1,5 +1,7 @@
 package com.example.ganemone.synergize;
 
+import android.widget.TextView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,4 +89,18 @@ public class Event extends APIObject {
         return this.address;
     }
 
+    public void setUpWithViews(TextView title, TextView dateRange, TextView description, TextView location) {
+        if (title != null) {
+            title.setText(this.title);
+        }
+        if (dateRange != null) {
+            dateRange.setText(this.getFormattedDateRange());
+        }
+        if (description != null) {
+            description.setText(this.description);
+        }
+        if (location != null) {
+            location.setText(this.getDisplayLocation());
+        }
+    }
 }
