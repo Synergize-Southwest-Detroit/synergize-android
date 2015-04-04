@@ -17,10 +17,8 @@ public class HowToDetailActivity extends ActionBarActivity {
         Intent intent = getIntent();
         int hid = intent.getIntExtra(HowtosFragment.HOWTO_EXTRA, -1);
         if (hid == -1) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Error getting howto extra", 3);
-            toast.show();
-            // SOMETHING WENT WRONG HERE
-        }
+            Toast.makeText(getApplicationContext(), "Error getting howto extra", Toast.LENGTH_LONG).show();
+         }
     }
 
     @Override
