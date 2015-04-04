@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.ganemone.synergize.APIManager;
+import com.example.ganemone.synergize.api.APIManager;
 import com.example.ganemone.synergize.R;
 
 /**

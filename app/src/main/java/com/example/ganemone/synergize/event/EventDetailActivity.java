@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ganemone.synergize.APIManager;
+import com.example.ganemone.synergize.api.APIManager;
 import com.example.ganemone.synergize.R;
 
 import java.io.UnsupportedEncodingException;

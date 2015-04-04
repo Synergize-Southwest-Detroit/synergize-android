@@ -1,6 +1,7 @@
 package com.example.ganemone.synergize;
 
-import org.json.JSONArray;
+import com.example.ganemone.synergize.api.APIObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

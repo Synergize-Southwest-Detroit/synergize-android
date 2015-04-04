@@ -1,10 +1,9 @@
 package com.example.ganemone.synergize;
 
+import com.example.ganemone.synergize.api.APIObject;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 /**
  * Created by ganemone on 3/30/15.
