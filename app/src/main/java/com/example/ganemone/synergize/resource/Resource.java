@@ -1,5 +1,8 @@
 package com.example.ganemone.synergize.resource;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import com.example.ganemone.synergize.api.APIObject;
 
 import org.json.JSONArray;
@@ -32,5 +35,9 @@ public class Resource extends APIObject {
 
     public Resource(JSONObject obj) throws JSONException {
         this(obj.getInt("id"), obj.getString("title"), obj.getString("resource"));
+    }
+
+    public Intent getIntentForLink() {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(this.link));
     }
 }

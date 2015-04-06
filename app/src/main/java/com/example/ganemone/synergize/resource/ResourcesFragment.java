@@ -58,7 +58,6 @@ public class ResourcesFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Resource item = adapter.getItem(position);
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(item.link));
-        startActivity(browserIntent);
+        startActivity(item.getIntentForLink());
     }
 }

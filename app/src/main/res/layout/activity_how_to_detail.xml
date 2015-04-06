@@ -2,20 +2,42 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/how_to_detail_root">
-
-        <TextView
-            style="@style/bold"
-            android:textSize="10pt"
-            android:id="@+id/howto_body"
-            android:text="@string/event_description_placeholder"
-            android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin" />
+            android:id="@+id/how_to_detail_root">
 
+            <TextView
+                style="@style/bold"
+                android:textSize="10pt"
+                android:id="@+id/howto_body"
+                android:text="@string/event_description_placeholder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/how_to_resource_root"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin">
+
+            <TextView
+                android:text="Resources"
+                style="@style/bold"
+                android:textSize="14pt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

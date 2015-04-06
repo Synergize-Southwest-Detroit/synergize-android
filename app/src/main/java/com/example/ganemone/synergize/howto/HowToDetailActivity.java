@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.ganemone.synergize.R;
 import com.example.ganemone.synergize.api.APIManager;
+import com.example.ganemone.synergize.resource.Resource;
 import com.example.ganemone.synergize.resource.ResourceListAdapter;
 
 import org.w3c.dom.Text;
@@ -22,8 +23,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 
-public class HowToDetailActivity extends ActionBarActivity {
-
+public class HowToDetailActivity extends ActionBarActivity implements View.OnClickListener {
+    public static int RESOURCE_TAG = 1;
     public HowTo howto;
 
     @Override
@@ -67,6 +68,17 @@ public class HowToDetailActivity extends ActionBarActivity {
             stepViews.add(stepViewItem);
             root.addView(stepViewItem, i+1);
         }
+
+        ViewGroup resourceRoot = (ViewGroup) findViewById(R.id.how_to_resource_root);
+        ArrayList<View> resourceViews = new ArrayList<>();
+        for (int i = 0; i < howto.resources.size(); i++) {
+            Resource resource = howto.resources.get(i);
+            View resourceViewItem = inflater.inflate(R.layout.resource_item, resourceRoot, false);
+            ((TextView) resourceViewItem.findViewById(R.id.resource_title)).setText(resource.title);
+            resourceViewItem.setTag(resource);
+            resourceViewItem.setOnClickListener(this);
+            resourceRoot.addView(resourceViewItem, i+1);
+        }
     }
 
     @Override
@@ -89,5 +101,11 @@ public class HowToDetailActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Resource resource = (Resource) v.getTag();
+        startActivity(resource.getIntentForLink());
     }
 }
