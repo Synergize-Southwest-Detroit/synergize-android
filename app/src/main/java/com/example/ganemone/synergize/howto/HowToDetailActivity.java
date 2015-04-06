@@ -31,9 +31,6 @@ public class HowToDetailActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_to_detail);
 
-        TextView title = (TextView) findViewById(R.id.howto_title);
-        TextView body = (TextView) findViewById(R.id.howto_body);
-
         Intent intent = getIntent();
         int hid = intent.getIntExtra(HowtosFragment.HOWTO_EXTRA, -1);
         if (hid == -1) {
@@ -45,15 +42,14 @@ public class HowToDetailActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Error: Could not find selected howto", Toast.LENGTH_LONG).show();
             return;
         }
+        if (howto.title != null) {
+            this.setTitle(howto.title);
+        }
 
-        ArrayList<Step> steps = new ArrayList<Step>();
-        steps.add(new Step("Do something cool", "Be really awesome while doing something cool. Also be super cool", "http://i.imgur.com/zV4Gfr3.jpg"));
-        steps.add(new Step("Do something cool", "Be really awesome while doing something cool. Also be super cool", ""));
-        steps.add(new Step("Do something cool", "Be really awesome while doing something cool. Also be super cool", "http://i.imgur.com/v8rrnP4.jpg"));
-        steps.add(new Step("Do something cool", "Be really awesome while doing something cool. Also be super cool", "http://i.imgur.com/Ikhodji.jpg"));
-        steps.add(new Step("Do something cool", "Be really awesome while doing something cool. Also be super cool", ""));
-        howto.steps = steps;
-        howto.setUpWithViews(title, body);
+        TextView body = (TextView) findViewById(R.id.howto_body);
+        if (howto.description != null) {
+            body.setText(howto.description);
+        }
 
         LayoutInflater inflater = getLayoutInflater();
         ArrayList<View> stepViews = new ArrayList<View>();
@@ -67,8 +63,9 @@ public class HowToDetailActivity extends ActionBarActivity {
                     (TextView) stepViewItem.findViewById(R.id.step_body),
                     (ImageView) stepViewItem.findViewById(R.id.step_image)
             );
+            ((TextView) stepViewItem.findViewById(R.id.step_heading)).setText("Step " + (i + 1) + ":");
             stepViews.add(stepViewItem);
-            root.addView(stepViewItem, i+2);
+            root.addView(stepViewItem, i+1);
         }
     }
 

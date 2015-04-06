@@ -5,10 +5,13 @@ import android.widget.TextView;
 import com.example.ganemone.synergize.resource.Resource;
 import com.example.ganemone.synergize.api.APIObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by ganemone on 3/30/15.
@@ -38,11 +41,17 @@ public class HowTo extends APIObject {
         this.title = title;
         this.description = description;
         this.resources = resources;
-        this.steps = steps;
+        this.setSteps(steps);
     }
 
     public HowTo(JSONObject obj) throws JSONException {
-        this(obj.getInt("id"), obj.getString("title"), obj.getString("description"));
+        this(
+                obj.getInt("id"),
+                obj.getString("title"),
+                obj.getString("description"),
+                Resource.createResourceArray(obj.getJSONArray("resources")),
+                Step.createStepArray(obj.getJSONArray("steps"))
+        );
     }
 
     public void setUpWithViews(TextView title, TextView body) {
@@ -52,5 +61,10 @@ public class HowTo extends APIObject {
         if (body != null) {
             body.setText(description);
         }
+    }
+
+    public void setSteps(ArrayList<Step> steps) {
+        this.steps = steps;
+        Collections.sort(this.steps);
     }
 }

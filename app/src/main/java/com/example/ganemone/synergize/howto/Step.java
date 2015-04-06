@@ -5,22 +5,48 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ganemone.synergize.api.APIObject;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by ganemone on 4/4/15.
  */
-public class Step {
+public class Step extends APIObject implements Comparable<Step> {
     public String title;
     public String body;
     public String link;
     public Bitmap image;
+    public int order;
 
-    public Step(String title, String body, String link) {
+    public static ArrayList<Step> createStepArray(JSONArray rawSteps) throws JSONException {
+        ArrayList<Step> steps = new ArrayList<>();
+        for (int i = 0; i < rawSteps.length(); i++) {
+            steps.add(new Step(rawSteps.getJSONObject(i)));
+        }
+        return steps;
+    }
+
+    public Step(String title, String body, String link, int order) {
         this.title = title;
         this.body = body;
         this.link = link;
+        this.order = order;
+    }
+
+    public Step(JSONObject jsonObject) throws JSONException {
+        this(
+                jsonObject.getString("title"),
+                jsonObject.getString("description"),
+                jsonObject.getString("image"),
+                jsonObject.getInt("number")
+        );
     }
 
     public void setUpWithViews(TextView title, TextView body) {
@@ -40,5 +66,10 @@ public class Step {
         else if (this.link.length() > 0) {
             ImageLoader.getInstance().displayImage(this.link, imageView);
         }
+    }
+
+    @Override
+    public int compareTo(Step another) {
+        return this.order - another.order;
     }
 }

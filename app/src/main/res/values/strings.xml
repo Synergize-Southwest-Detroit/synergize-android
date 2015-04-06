@@ -13,4 +13,5 @@
     <string name="title_activity_how_to_detail">HowToDetailActivity</string>
     <string name="add_to_calendar">Add To Calendar</string>
     <string name="google_maps">Google Maps</string>
+    <string name="step_placeholder">Step 1</string>
 </resources>
