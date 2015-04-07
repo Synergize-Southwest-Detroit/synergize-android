@@ -1,5 +1,7 @@
 package com.example.ganemone.synergize.api;
 
+import android.util.Log;
+
 import com.example.ganemone.synergize.Closure;
 import com.example.ganemone.synergize.howto.HowTo;
 import com.example.ganemone.synergize.resource.Resource;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by ganemone on 4/1/15.
  */
+
 
 public class APIManager {
 
@@ -231,6 +234,7 @@ public class APIManager {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.i("FAILED: ", "Status Code: " + statusCode);
                 cb.onFailure(responseString);
             }
         };
