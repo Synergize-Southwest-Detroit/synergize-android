@@ -6,7 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.ganemone.synergize.Closure;
 import com.example.ganemone.synergize.R;
 import com.example.ganemone.synergize.api.APIManager;
 
@@ -16,6 +18,18 @@ import java.util.ArrayList;
  * Created by ganemone on 3/30/15.
  */
 public class HowToListAdapter extends ArrayAdapter<HowTo> {
+
+    private Closure closure = new Closure() {
+        @Override
+        public void onSuccess() {
+            HowToListAdapter.this.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onFailure(String message) {
+            Toast.makeText(getContext(), "Failed to load more howtos, " + message, Toast.LENGTH_LONG).show();
+        }
+    };
 
     public HowToListAdapter(Context applicationContext) {
         super(applicationContext, R.layout.howto_list_item, APIManager.getInstance().howtos);
@@ -36,13 +50,10 @@ public class HowToListAdapter extends ArrayAdapter<HowTo> {
         titleTextView.setText(item.title);
         descriptionTextView.setText(item.description);
 
-        return convertView;
-    }
+        if (position == this.getCount() - 1 && APIManager.getInstance().hasNextHowToPage()) {
+            APIManager.getInstance().loadHowtos(closure);
+        }
 
-    public void syncWithAPIManager() {
-        ArrayList<HowTo> howtos = APIManager.getInstance().howtos;
-        this.clear();
-        this.addAll(howtos);
-        this.notifyDataSetChanged();
+        return convertView;
     }
 }

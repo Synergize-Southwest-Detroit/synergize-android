@@ -79,6 +79,7 @@ public class HowtosFragment extends Fragment implements ListView.OnItemClickList
             public void onSuccess() {
                 progress.hide();
                 adapter.notifyDataSetChanged();
+                list.setSelectionAfterHeaderView();
             }
 
             @Override

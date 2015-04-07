@@ -36,6 +36,9 @@ public class APIManager {
     public int howtoPage = 1;
     public int eventPage = 1;
     public int resourcePage = 1;
+    public int numHowToPages = 1;
+    public int numEventPages = 1;
+    public int numResourcePages = 1;
 
 
     public enum Type {
@@ -81,7 +84,7 @@ public class APIManager {
 
     public void loadEvents(final Closure cb) {
 
-        JsonHttpResponseHandler handler = getGETHandler(Event.class, new APIClosure() {
+        JsonHttpResponseHandler handler = getGETHandler(Type.EVENT, new APIClosure() {
             @Override
             public void onSuccess(ArrayList objects) {
                 eventPage++;
@@ -97,7 +100,7 @@ public class APIManager {
             }
         });
         RequestParams params = new RequestParams("page", eventPage);
-        client.get(BASE_URL + "events", null, handler);
+        client.get(BASE_URL + "events", params, handler);
     }
 
     public void reloadHowtos(Closure cb) {
@@ -108,7 +111,7 @@ public class APIManager {
 
     public void loadHowtos(final Closure cb) {
 
-        JsonHttpResponseHandler handler = getGETHandler(HowTo.class, new APIClosure() {
+        JsonHttpResponseHandler handler = getGETHandler(Type.HOWTO, new APIClosure() {
             @Override
             public void onSuccess(ArrayList objects) {
                 howtoPage++;
@@ -137,7 +140,7 @@ public class APIManager {
 
     public void loadResources(final Closure cb) {
 
-        JsonHttpResponseHandler handler = getGETHandler(Resource.class, new APIClosure() {
+        JsonHttpResponseHandler handler = getGETHandler(Type.RESOURCE, new APIClosure() {
             @Override
             public void onSuccess(ArrayList objects) {
                 resourcePage++;
@@ -153,13 +156,43 @@ public class APIManager {
             }
         });
         RequestParams params = new RequestParams("page", resourcePage);
-        client.get(BASE_URL + "resources", null, handler);
+        client.get(BASE_URL + "resources", params, handler);
     }
 
-    public JsonHttpResponseHandler getGETHandler(final Class<? extends APIObject> obj, final APIClosure cb) {
+    public Constructor<? extends APIObject> getConstructorFromType(Type type) {
+        try {
+            switch (type) {
+                case EVENT:
+                    return Event.class.getConstructor(JSONObject.class);
+                case RESOURCE:
+                    return Resource.class.getConstructor(JSONObject.class);
+                case HOWTO:
+                    return HowTo.class.getConstructor(JSONObject.class);
+            }
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void setTotalPages(Type type, JSONObject response) {
+        try {
+            int totalPages = response.getInt("total_pages");
+            switch (type) {
+                case EVENT: numEventPages = totalPages; break;
+                case RESOURCE: numResourcePages = totalPages; break;
+                case HOWTO: numHowToPages = totalPages; break;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JsonHttpResponseHandler getGETHandler(final Type type, final APIClosure cb) {
         return new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                setTotalPages(type, response);
                 JSONArray objects = null;
                 ArrayList ret = new ArrayList(10);
                 try {
@@ -169,10 +202,11 @@ public class APIManager {
                     cb.onFailure("Error parsing response");
                     return;
                 }
+                Constructor<? extends APIObject> constructor = null;
+                constructor = getConstructorFromType(type);
                 for (int i = 0; i < objects.length(); i++) {
                     try {
                         JSONObject jsonObj = objects.getJSONObject(i);
-                        Constructor<? extends APIObject> constructor = obj.getConstructor(JSONObject.class);
                         ret.add(constructor.newInstance(jsonObj));
                     } catch (JSONException e) {
                         cb.onFailure("Error creating event");
@@ -180,10 +214,6 @@ public class APIManager {
                         return;
                     } catch (InvocationTargetException e) {
                         cb.onFailure("Invocation Target Exception");
-                        e.printStackTrace();
-                        return;
-                    } catch (NoSuchMethodException e) {
-                        cb.onFailure("No Such Method Exception");
                         e.printStackTrace();
                         return;
                     } catch (InstantiationException e) {
@@ -206,9 +236,15 @@ public class APIManager {
         };
     }
 
+    public boolean hasNextEventPage() {
+        return eventPage <= numEventPages;
+    }
 
+    public boolean hasNextHowToPage() {
+        return howtoPage <= numHowToPages;
+    }
 
-
-
-
+    public boolean hasNextResourcePage() {
+        return resourcePage <= numResourcePages;
+    }
 }

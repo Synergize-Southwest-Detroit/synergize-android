@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
         if (item.getItemId() == R.id.action_refresh) {
             for (int i = 0; i < 3; i++) {
                 Fragment fragment = adapter.getItem(i);
-                if (fragment.isVisible()) {
+                if (fragment.isVisible() && false) {
                     ((RefreshingFragment)fragment).refresh();
                     return true;
                 }

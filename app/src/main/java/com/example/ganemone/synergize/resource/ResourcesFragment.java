@@ -74,6 +74,7 @@ public class ResourcesFragment extends Fragment implements AdapterView.OnItemCli
             public void onSuccess() {
                 progress.hide();
                 adapter.notifyDataSetChanged();
+                listView.setSelectionAfterHeaderView();
             }
 
             @Override

@@ -83,6 +83,7 @@ public class EventsFragment extends Fragment implements ListView.OnItemClickList
             public void onSuccess() {
                 progress.hide();
                 adapter.notifyDataSetChanged();
+                listView.setSelectionAfterHeaderView();
             }
 
             @Override
