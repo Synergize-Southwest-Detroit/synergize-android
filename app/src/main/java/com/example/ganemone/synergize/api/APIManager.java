@@ -3,9 +3,9 @@ package com.example.ganemone.synergize.api;
 import android.util.Log;
 
 import com.example.ganemone.synergize.Closure;
+import com.example.ganemone.synergize.event.Event;
 import com.example.ganemone.synergize.howto.HowTo;
 import com.example.ganemone.synergize.resource.Resource;
-import com.example.ganemone.synergize.event.Event;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
