@@ -31,9 +31,9 @@ public class APIManager {
 
     public static String BASE_URL = "http://ganemone.pythonanywhere.com/api/";
 
-    public ArrayList<Event> events = new ArrayList<Event>();
-    public ArrayList<HowTo> howtos = new ArrayList<HowTo>();
-    public ArrayList<Resource> resources = new ArrayList<Resource>();
+    public ArrayList<Event> events = new ArrayList<>();
+    public ArrayList<HowTo> howtos = new ArrayList<>();
+    public ArrayList<Resource> resources = new ArrayList<>();
     private AsyncHttpClient client = new AsyncHttpClient();
 
     public int howtoPage = 1;
