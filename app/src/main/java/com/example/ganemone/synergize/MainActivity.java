@@ -6,11 +6,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.example.ganemone.synergize.event.EventsFragment;
 import com.example.ganemone.synergize.howto.HowtosFragment;
 import com.example.ganemone.synergize.resource.ResourcesFragment;
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -32,24 +38,46 @@ public class MainActivity extends ActionBarActivity {
         slidingTabLayout.setViewPager(pager);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_refresh) {
+            for (int i = 0; i < 3; i++) {
+                Fragment fragment = adapter.getItem(i);
+                if (fragment.isVisible()) {
+                    ((RefreshingFragment)fragment).refresh();
+                    return true;
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     class MPagerAdapter extends FragmentPagerAdapter {
+
+        ArrayList<Fragment> fragments = new ArrayList<Fragment>();
 
         public MPagerAdapter(FragmentManager fm) {
             super(fm);
+            fragments.add(new EventsFragment());
+            fragments.add(new HowtosFragment());
+            fragments.add(new ResourcesFragment());
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return fragments.size();
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 0: return new EventsFragment();
-                case 1: return new HowtosFragment();
-                default: return new ResourcesFragment();
-            }
+            return fragments.get(position);
         }
 
         @Override

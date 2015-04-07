@@ -1,5 +1,6 @@
 package com.example.ganemone.synergize.howto;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +13,13 @@ import android.widget.Toast;
 
 import com.example.ganemone.synergize.Closure;
 import com.example.ganemone.synergize.R;
+import com.example.ganemone.synergize.RefreshingFragment;
 import com.example.ganemone.synergize.api.APIManager;
 
 /**
  * Created by ganemone on 3/29/15.
  */
-public class HowtosFragment extends Fragment implements ListView.OnItemClickListener {
+public class HowtosFragment extends Fragment implements ListView.OnItemClickListener, RefreshingFragment {
 
     public final static String HOWTO_EXTRA = "com.synergize.synergize.howto_extra";
 
@@ -65,4 +67,25 @@ public class HowtosFragment extends Fragment implements ListView.OnItemClickList
         intent.putExtra(HOWTO_EXTRA, item.id);
         startActivity(intent);
      }
+
+    @Override
+    public void refresh() {
+        final ProgressDialog progress = new ProgressDialog(getActivity());
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading How Tos");
+        progress.show();
+        APIManager.getInstance().reloadHowtos(new Closure() {
+            @Override
+            public void onSuccess() {
+                progress.hide();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String message) {
+                progress.hide();
+                Toast.makeText(getActivity().getApplicationContext(), "Failed to load events, " + message, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

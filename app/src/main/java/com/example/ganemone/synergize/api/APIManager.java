@@ -37,6 +37,7 @@ public class APIManager {
     public int eventPage = 1;
     public int resourcePage = 1;
 
+
     public enum Type {
         EVENT, HOWTO, RESOURCE
     }
@@ -72,6 +73,12 @@ public class APIManager {
         return null;
     }
 
+    public void reloadEvents(final Closure cb) {
+        this.events.clear();
+        this.eventPage = 1;
+        this.loadEvents(cb);
+    }
+
     public void loadEvents(final Closure cb) {
 
         JsonHttpResponseHandler handler = getGETHandler(Event.class, new APIClosure() {
@@ -91,6 +98,12 @@ public class APIManager {
         });
         RequestParams params = new RequestParams("page", eventPage);
         client.get(BASE_URL + "events", null, handler);
+    }
+
+    public void reloadHowtos(Closure cb) {
+        howtoPage = 1;
+        howtos.clear();
+        loadHowtos(cb);
     }
 
     public void loadHowtos(final Closure cb) {
@@ -113,6 +126,13 @@ public class APIManager {
 
         RequestParams params = new RequestParams("page", howtoPage);
         client.get(BASE_URL + "howtos", params, handler);
+    }
+
+
+    public void reloadResources(Closure closure) {
+        resourcePage = 1;
+        resources.clear();
+        loadResources(closure);
     }
 
     public void loadResources(final Closure cb) {

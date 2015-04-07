@@ -1,5 +1,6 @@
 package com.example.ganemone.synergize.resource;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,12 +15,13 @@ import android.widget.Toast;
 
 import com.example.ganemone.synergize.Closure;
 import com.example.ganemone.synergize.R;
+import com.example.ganemone.synergize.RefreshingFragment;
 import com.example.ganemone.synergize.api.APIManager;
 
 /**
  * Created by ganemone on 3/29/15.
  */
-public class ResourcesFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ResourcesFragment extends Fragment implements AdapterView.OnItemClickListener, RefreshingFragment {
 
     public final static String RESOURCE_EXTRA = "com.synergize.synergize.resource_extra";
 
@@ -59,5 +61,26 @@ public class ResourcesFragment extends Fragment implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Resource item = adapter.getItem(position);
         startActivity(item.getIntentForLink());
+    }
+
+    @Override
+    public void refresh() {
+        final ProgressDialog progress = new ProgressDialog(getActivity());
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading Resources");
+        progress.show();
+        APIManager.getInstance().reloadResources(new Closure() {
+            @Override
+            public void onSuccess() {
+                progress.hide();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String message) {
+                progress.hide();
+                Toast.makeText(getActivity().getApplicationContext(), "Failed to load events, " + message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

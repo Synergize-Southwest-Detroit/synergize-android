@@ -1,16 +1,19 @@
 package com.example.ganemone.synergize.event;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.ganemone.synergize.RefreshingFragment;
 import com.example.ganemone.synergize.api.APIManager;
 import com.example.ganemone.synergize.Closure;
 import com.example.ganemone.synergize.R;
@@ -20,7 +23,7 @@ import java.util.Date;
 /**
  * Created by ganemone on 3/29/15.
  */
-public class EventsFragment extends Fragment implements ListView.OnItemClickListener {
+public class EventsFragment extends Fragment implements ListView.OnItemClickListener, RefreshingFragment {
 
     public final static String EVENT_EXTRA = "com.synergize.synergize.EVENT_EXTRA";
     EventListAdapter adapter;
@@ -67,5 +70,26 @@ public class EventsFragment extends Fragment implements ListView.OnItemClickList
         Date now = new Date();
         intent.putExtra(EVENT_EXTRA, 1);
         startActivity(intent);
+    }
+
+    @Override
+    public void refresh() {
+        final ProgressDialog progress = new ProgressDialog(getActivity());
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.setMessage("Loading Events");
+        progress.show();
+        APIManager.getInstance().reloadEvents(new Closure() {
+            @Override
+            public void onSuccess() {
+                progress.hide();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(String message) {
+                progress.hide();
+                Toast.makeText(getActivity().getApplicationContext(), "Failed to load events, " + message, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
